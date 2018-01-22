@@ -18,11 +18,9 @@
     <style>
 
       section{
-        background-color: var(--tint-light-grey);
+        color: white;
         padding: 4rem 1rem;
       }
-
-
 
       .contact{
         @apply --layout-horizontal;
@@ -35,8 +33,8 @@
         height: 3rem;
         width: 3rem;
         border-radius: 50%;
-        background-color: var(--tint-black);
-        margin: 0 auto;
+        background-color: var(--tint-dark-grey);
+        margin: 0 auto 1rem auto;
       }
 
       .contact > div{
@@ -51,7 +49,7 @@
       iron-icon{
         height: 1.75rem;
         width: 1.75rem;
-        color: var(--tint-light-grey);
+        color: var(--tint-dark-grey);
         margin: 0 auto;
       }
 
@@ -62,16 +60,22 @@
         }
       }
 
+      h2, p, span, a, iron-icon{
+        color: white;
+      }
+
+
+
     </style>
 
-    <section class="tint-light-grey">
+    <section style="background-color: var(--tint-very-dark-grey)">
 
-      <div class="medium center center-text">
+      <div class="mediumlarge center center-text">
         <div>
           <span class="emoji">👋<span>
         </div>
-        <h2>Say hello</h2>
-        <p>Feel free to get in touch</p>
+        <h2>Say hi</h2>
+        <p>I'm always open for new opportunities, and I'm available for freelance work!</p>
       </div>
 
       <div class="medium center center-text contact">
@@ -80,7 +84,7 @@
             <iron-icon icon="communication:phone"></iron-icon>
           </div>
           <div>
-            <span><a href="tel:+4799704697">(+47) 997 04 697</a></span>
+            <span><a id="mobile" href="tel:+4799704697">(+47) 997 04 697</a></span>
           </div>
         </div>
 
@@ -89,7 +93,7 @@
             <iron-icon icon="communication:email"></iron-icon>
           </div>
           <div>
-          <span>mail@eirikgilje.com</span>
+          <a id="email" href="mailto:mail@eirikgilje.com">mail@eirikgilje.com</a></span>
           </div>
         </div>
 
@@ -98,7 +102,7 @@
             <img src="./images/linkedin.svg"/>
           </div>
           <div>
-            <span><a href="https://www.linkedin.com/in/eirikgilje/" target="_blank">LinkedIn</a></span>
+            <span><a id="linkedindown" href="https://www.linkedin.com/in/eirikgilje/" target="_blank">LinkedIn</a></span>
           </div>
         </div>
 
@@ -107,14 +111,46 @@
 
   </template>
 
-<script>
+  <script>
+    class ElementContact extends Polymer.Element {
 
-	Polymer({
-		is: "element-contact"
+      static get is() {return 'element-contact'}
 
-	});
-	
-</script>
+      ready() {
+        super.ready();
+        this.$.mobile.addEventListener('click', e => {this._handleClickLinkedMobile(e)});
+        this.$.email.addEventListener('click', e => {this._handleClickMail(e)});
+        this.$.linkedindown.addEventListener('click', e => {this._handleClickLinkedin(e)});
+      }
+
+      _handleClickLinkedMobile(e) {
+        // Send event to gtag.js
+        gtag('event', 'Clicked button', {
+          'event_category': 'Click',
+          'event_label': 'ContactMobile'
+        });
+      }
+
+      _handleClickMail(e) {
+        // Send event to gtag.js
+        gtag('event', 'Clicked button', {
+          'event_category': 'Click',
+          'event_label': 'ContactMail'
+        });
+      }
+
+      _handleClickLinkedin(e) {
+        // Send event to gtag.js
+        gtag('event', 'Clicked button', {
+          'event_category': 'Click',
+          'event_label': 'ContactLinkedIn'
+        });
+      }
+
+    }
+    customElements.define(ElementContact.is, ElementContact);
+
+  </script>
 
 </dom-module>
 

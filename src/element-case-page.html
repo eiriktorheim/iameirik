@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
 <link rel="import" href="element-footer.html">
 <link rel="import" href="element-mywork.html">
 <link rel="import" href="element-contact.html">
@@ -14,8 +15,10 @@
 
 <dom-module id="element-case-page">
   <template>
-    <style include="shared-styles">
-      app-header-layout {
+    <style include="shared-styles"></style>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style is="custom-style">
+            app-header-layout {
         @apply --layout-vertical;
         @apply --layout-center-center;
         padding: 0 1rem;
@@ -105,67 +108,10 @@
         font-style: italic;
       }
 
-      .timeline-step{
-        position: relative;
-        width: 2px;
-        background-color: #f0f0f0;
-        margin: 0 auto;
-        margin-bottom: -2rem;
-      }
-
-      .step-container {
-      position: relative;
-        left: 100px;
-        bottom: 0;
-        width: 300px;
-      }
 
       img,video{
         margin-top: 2rem;
         margin-bottom: 2rem;
-      }
-
-      .step-container-right {
-        text-align: left;
-      }
-
-      .step-container-left {
-        left: -400px;
-        text-align: right;
-      }
-
-      .step-container-left:before {
-          left: 324px;
-          content: "";
-          position: absolute;
-          top: 146px;
-          width: 60px;
-          height: 2px;
-          background: #f0f0f0;
-      }
-
-      .step-container-right:before {
-          left: -80px;
-          content: "";
-          position: absolute;
-          top: 146px;
-          width: 60px;
-          height: 2px;
-          background: #f0f0f0;
-      }
-
-      .timeline-step:after {
-          content: "";
-          position: absolute;
-          transition: all .2s ease;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          top: 133px;
-          border: 10px solid #fff;
-          background: var(--tint-primary);
       }
 
       ul{
@@ -175,6 +121,132 @@
       li{
         list-style: none;
       }
+
+      @media (max-width: 599px) {
+
+        .timeline-step{
+          position: relative;
+          width: 2px;
+          background-color: #f0f0f0;
+          margin-left: 2rem;
+          margin-bottom: -2rem;
+        }
+
+        .step-container {
+          position: relative;
+          left: 38px;
+          bottom: 0;
+          width: 272px;
+          padding: 0 1rem;
+        }
+
+        .step-container-right, .step-container-left {
+          text-align: left;
+        }
+
+        /*.step-container-left {
+          left: -400px;
+          text-align: right;
+        }*/
+
+        /*.step-container-left:before {
+            left: 324px;
+            content: "";
+            position: absolute;
+            top: 146px;
+            width: 3rem;
+            height: 2px;
+            background: #f0f0f0;
+        }*/
+
+        .step-container-right:before, .step-container-left:before {
+            left: -45px;
+            content: "";
+            position: absolute;
+            top: 146px;
+            width: 2.5rem;
+            height: 2px;
+            background: #f0f0f0;
+        }
+
+        .timeline-step:after {
+            content: "";
+            position: absolute;
+            transition: all .2s ease;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            top: 133px;
+            border: 10px solid #fff;
+            background: var(--tint-primary);
+        }
+
+      }
+
+      @media (min-width: 600px) {
+
+        .timeline-step{
+          position: relative;
+          width: 2px;
+          background-color: #f0f0f0;
+          margin: 0 auto;
+          margin-bottom: -2rem;
+        }
+
+        .step-container {
+        position: relative;
+          left: 100px;
+          bottom: 0;
+          width: 300px;
+        }
+
+        .step-container-right {
+          text-align: left;
+        }
+
+        .step-container-left {
+          left: -400px;
+          text-align: right;
+        }
+
+        .step-container-left:before {
+            left: 324px;
+            content: "";
+            position: absolute;
+            top: 146px;
+            width: 60px;
+            height: 2px;
+            background: #f0f0f0;
+        }
+
+        .step-container-right:before {
+            left: -80px;
+            content: "";
+            position: absolute;
+            top: 146px;
+            width: 60px;
+            height: 2px;
+            background: #f0f0f0;
+        }
+
+        .timeline-step:after {
+            content: "";
+            position: absolute;
+            transition: all .2s ease;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            top: 133px;
+            border: 10px solid #fff;
+            background: var(--tint-primary);
+        }
+
+      }
+
 
       .grid {
         display: grid;
@@ -187,9 +259,6 @@
         .grid {
           grid-template-columns: repeat(2, 1fr);
         }
-
-
-
       }
 
       @media (min-width: 600px) {
@@ -251,6 +320,50 @@
         font-size: 1rem;
       }
 
+      .project-overview {
+        display: grid;
+        grid-gap: 5rem;
+        grid-auto-rows: minmax(5rem, auto);
+        margin-top: 1rem;
+      }
+
+      .project-facts p{
+        font-size: 1rem;
+      }
+
+      .timeline-img h2, .timeline-img-right h2{
+        color: var(--tint-very-dark-grey);
+      }
+
+      @media (max-width: 599px) {
+        .project-overview {
+          grid-template-columns: repeat(1, 1fr);
+        }
+
+        .step-container h4{
+          padding-top: 0;
+        }
+
+        .step-container p{
+          padding-bottom: 6rem;
+        }
+      }
+
+      @media (min-width: 600px) {
+        .project-overview {
+          grid-template-columns: calc(60% - 2.5rem) calc(40% - 2.5rem);
+        }
+        .project-facts{
+          margin-top: 5rem;
+        }
+      }
+
+      @media (min-width: 900px) {
+        .project-overview {
+          grid-template-columns: calc(60% - 2.5rem) calc(40% - 2.5rem);
+        }
+      }
+
       .sideproject {
         max-width: 55rem;
         height: 22rem;
@@ -261,16 +374,17 @@
         background-color: var(--tint-light-grey);
       }
 
-
-
       .sideproject-info{
         padding: 1rem 2rem;
 
       }
 
-
-
       @media (max-width: 599px) {
+
+        #morecases{
+          display: none;
+        }
+
         .imgcover{
           width: 100%;
           height: 22rem;
@@ -320,16 +434,13 @@
       }
 
     </style>
-
-
-    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
     
     <div class="hero-image" style$="background-image: url('[[project.hero]]');"></div>
 
     <app-header-layout>
       <app-header effects="waterfall" slot="header">
         <app-toolbar>
-          <a href="/#schibsted-media-platform" style="color:white;">
+          <a href="/" style="color:white;" on-click="backtoFront">
             <paper-icon-button icon="arrow-back"></paper-icon-button>
             <span class="sans-serif" style="color:white;">Back to front</span>
           </a>
@@ -349,38 +460,18 @@
     <div id="visual" class="project-image full center"></div>
 
     <div id="body"></div>
-<!--
-    <div class="full cta">
-      <div class="mediumlarge center grid" style="padding: 6rem 0;">
-        <div class="cta-case card center-text">
-        </div>
-        <div class="cta-case card center-text">
-          <paper-button on-click="_nextCase" invisible$="[[_shouldHideNext(project)]]">Next case &nbsp;
-            <iron-icon icon="arrow-forward"></iron-icon>
-          </paper-button>
-        </div>
-      </div>
-    </div>
 
-  -->
-        <div class="full cta">
+
+
+        <div id="morecases" class="full cta">
             <element-mywork></element-mywork>
         </div>
-<!--
-          <paper-button on-click="_nextCase" invisible$="[[_shouldHideNext(project)]]">Next case &nbsp;
-            <iron-icon icon="arrow-forward"></iron-icon>
-          </paper-button>
--->
-<!--
-          <paper-button>
-            <iron-icon icon="arrow-back"></iron-icon>
-            &nbsp; Back 
-          </paper-button>-->
+
 
         <div class="bottom-nav full">
           <div class="nav-items">
             <div class="nav-item">
-              <a href="/#schibsted-media-platform">
+              <a href="/" on-click="backtoFront">
                 <paper-icon-button icon="arrow-back"></paper-icon-button>
                 <span class="sans-serif">Back to front</span>
               </a>
@@ -401,6 +492,7 @@
   </template>
 
   <script>
+
     class ElementCasePage extends Polymer.Element {
       static get is() {
         return 'element-case-page';
@@ -418,6 +510,11 @@
           '_setVisual(project.mainVisual)',
           '_setBody(project.body)'
         ];
+      }
+
+
+      backtoFront() {
+        Polymer.AppLayout.scroll({top: 1000, behavior: 'smooth'});
       }
 
       _shouldHidePrevious() {
@@ -451,7 +548,17 @@
       }
 
       _nextCase(e) {
-        // Wait for ripple to finish.
+
+        // Send page view to gtag
+
+        gtag('config', 'UA-96014868-1', {
+          'page_title': location.pathname,
+          'page_location': location.href,
+          'page_path': location.pathname
+        });
+
+        // Change page
+
         e.target.addEventListener('transitionend', e => {
           location.href = 'case/' + this.project.next;
         });
@@ -459,5 +566,6 @@
     }
 
     window.customElements.define(ElementCasePage.is, ElementCasePage);
+
   </script>
 </dom-module>

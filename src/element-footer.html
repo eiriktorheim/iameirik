@@ -24,7 +24,8 @@
     <!-- shadow DOM goes here -->
     <section>
       <div class="larger center center-text">
-        <h3>Handcrafted with  &nbsp;❤️ &nbsp; and  &nbsp;☕&nbsp; from Barcelona. <a href="https://github.com/eiriktorheim/iameirik">Code</a> and design by Eirik Torheim Gilje.
+        <h3>Handcrafted with  &nbsp;❤️ &nbsp; and  &nbsp;☕&nbsp; from Barcelona. 
+          <a id="githublink" class="github" href="https://github.com/eiriktorheim/iameirik" target="_blank">Code</a> and design by Eirik Torheim Gilje.
         </h3>
       </div>
     </section>
@@ -32,10 +33,26 @@
   </template>
 
   <script>
-    Polymer({
-      is: "element-footer"
+    class ElementFooter extends Polymer.Element {
 
-    });
+      static get is() {return 'element-footer'}
+
+      ready() {
+        super.ready();
+        this.$.githublink.addEventListener('click', e => {this._handleClick(e)});
+      }
+
+      _handleClick(e) {
+        // Send event to gtag.js
+        gtag('event', 'Clicked button', {
+          'event_category': 'Click',
+          'event_label': 'Github'
+        });
+      }
+
+    }
+    customElements.define(ElementFooter.is, ElementFooter);
+
   </script>
 
 </dom-module>
