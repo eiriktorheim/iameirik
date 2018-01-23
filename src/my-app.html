@@ -6,7 +6,7 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---> 
+-->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         super();
 
         // Get root pattern for app-route, for more info about `rootPath` see:
-        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates 
+        // https://www.polymer-project.org/2.0/docs/upgrade#urls-in-templates
         this.rootPattern = (new URL(this.rootPath)).pathname;
 
       }
@@ -88,14 +88,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.page = page || 'view1';
 
         Polymer.AppLayout.scroll({top: 0});
-
-        //console.log('Send sidevisning til Google: ' + location.pathname);
-
-        gtag('config', 'UA-96014868-1', {
-          'page_title': location.pathname,
-          'page_location': location.href,
-          'page_path': location.pathname
-        });
       }
 
       _pageChanged(page) {
@@ -108,6 +100,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           null,
           this._showPage404.bind(this),
           true);
+
+        gtag('event', 'Page Changed', {page})
       }
 
       _showPage404() {
