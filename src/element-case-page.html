@@ -548,17 +548,7 @@
       }
 
       _nextCase(e) {
-
-        // Send page view to gtag
-
-        gtag('config', 'UA-96014868-1', {
-          'page_title': location.pathname,
-          'page_location': location.href,
-          'page_path': location.pathname
-        });
-
         // Change page
-
         e.target.addEventListener('transitionend', e => {
           location.href = 'case/' + this.project.next;
         });
