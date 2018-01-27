@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </script>
 
 
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
   <title>I am Eirik</title>
@@ -56,6 +57,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="icon" type="image/png" href="images/manifest/favicon-16x16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="images/manifest/favicon-32x32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="images/manifest/favicon-96x96.png" sizes="96x96">
+
+
+  <script>
+    if (window.PerformanceObserver) {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          const metricName = entry.name;
+          const time = Math.round(entry.startTime + entry.duration);
+          gtag('event', metricName, {
+            'name': 'load',
+            'value': time,
+            'event_label': time,
+            'event_category': 'Performance Metrics'
+          });
+        }
+      });
+      observer.observe({
+        entryTypes: ['paint']
+      });
+    }
+  </script>
 
 
 
