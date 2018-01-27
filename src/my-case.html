@@ -16,7 +16,7 @@
 <dom-module id="my-case">
   <template>
     <style include="shared-styles">
-       :host {
+      :host {
         display: block;
       }
     </style>
@@ -423,7 +423,7 @@
                   "next": "schibsted-media-platform",
                   "subroute": "marketplace-car-vertical",
                   "title": "Marketplace Car Vertical",
-                  "subtitle": "Products for car dealers to get insight on ad performance and optimization suggestions",  
+                  "subtitle": "Products for car dealers to get insight on ad performance and optimization suggestions",
                   "roleandtime": "Product Designer | May - Dec 2016",
                   "hero": "/images/cases/cars.jpg",
                   "mainVisual": `
@@ -954,16 +954,24 @@
         }
       }
 
-      static get observers() {
-        return [];
-      }
-
       _filterCases(caseName) {
         return item => {
-          return item.subroute == this.routeData.caseName;
+          if (item.subroute == this.routeData.caseName) {
+            this._caseNameChanged(item.title);
+            return true;
+          }
         }
       }
 
+      _caseNameChanged(title) {
+        this.dispatchEvent(new CustomEvent('virtual-page-changed', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            title: `I am Eirik • ${title}`
+          }
+        }));
+      }
 
     }
 

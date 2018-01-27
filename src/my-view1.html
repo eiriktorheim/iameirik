@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="my-view1">
   <template>
-    
+
     <style include="shared-styles"></style>
     <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
 
@@ -46,16 +46,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <element-ivalue></element-ivalue>
 
-    <element-contact></element-contact> 
+    <element-contact></element-contact>
 
-    <element-footer></element-footer>  
+    <element-footer></element-footer>
 
-  
+
   </template>
 
   <script>
     class MyView1 extends Polymer.Element {
-      static get is() { return 'my-view1'; }
+      static get is() {
+        return 'my-view1';
+      }
+
+      static get properties() {
+        return {
+          visible: {
+            type: Boolean,
+            value: false
+          }
+        }
+      }
+
+      static get observers() {
+        return [
+          '_visibleChanged(visible)'
+        ]
+      }
+
+      _visibleChanged(visibiliy) {
+        if (visibiliy) {
+          this.dispatchEvent(new CustomEvent('virtual-page-changed', {
+            bubbles: true,
+            composed: true,
+            detail: {
+              title: 'I am Eirik'
+            }
+          }));
+        }
+      }
+
+
     }
 
     window.customElements.define(MyView1.is, MyView1);
