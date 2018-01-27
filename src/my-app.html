@@ -20,6 +20,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="my-case.html">
 <link rel="lazy-import" href="my-view404.html">
 
+<link rel="import" href="mixin-analytics.html">
+
 <dom-module id="my-app">
   <template>
 
@@ -38,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyApp extends Polymer.Element {
+    class MyApp extends MixinAnalytics(Polymer.Element) {
 
       static get is() {
         return 'my-app';
@@ -114,11 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _sendVirtualPageViewToGoogleAnalytics() {
-        gtag('config', window.gtagId, {
-          'page_title': document.title,
-          'page_location': location.href,
-          'page_path': location.pathname
-        });
+        this._trackPageView();
       }
 
       _setPageTitle(e) {

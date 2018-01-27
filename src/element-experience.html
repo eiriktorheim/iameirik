@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="mixin-analytics.html">
 
 <dom-module id="element-experience">
   <template>
@@ -111,7 +112,7 @@
   </template>
 
   <script>
-    class ElementExperience extends Polymer.Element {
+    class ElementExperience extends MixinAnalytics(Polymer.Element) {
       static get is() {
         return 'element-experience'
       }
@@ -164,13 +165,7 @@
       }
 
       _onClick(e) {
-        const url = e.currentTarget.getAttribute('href');
-        const category = e.currentTarget.getAttribute('data-category') || '';
-        gtag('event', 'click', {
-          'event_category': category,
-          'event_label': url,
-          'transport_type': 'beacon'
-        });
+        this._trackOutboundLink(e);
       }
 
     }

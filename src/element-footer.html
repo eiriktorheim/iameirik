@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="mixin-analytics.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="element-footer">
@@ -34,20 +35,14 @@
   </template>
 
   <script>
-    class ElementFooter extends Polymer.Element {
+    class ElementFooter extends MixinAnalytics(Polymer.Element) {
 
       static get is() {
         return 'element-footer'
       }
 
       _onClick(e) {
-        const url = e.currentTarget.getAttribute('href');
-        const category = e.currentTarget.getAttribute('data-category') || '';
-        gtag('event', 'click', {
-          'event_category': category,
-          'event_label': url,
-          'transport_type': 'beacon'
-        });
+        this._trackOutboundLink(e);
       }
 
     }

@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/lazy-image/lazy-image.html">
 
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="mixin-analytics.html">
 
 <dom-module id="element-header">
 
@@ -302,7 +303,7 @@
   </template>
 
   <script>
-    class ElementHeader extends Polymer.Element {
+    class ElementHeader extends MixinAnalytics(Polymer.Element) {
 
       static get is() {
         return 'element-header'
@@ -324,12 +325,7 @@
           behavior: 'smooth'
         });
 
-
-        gtag('event', 'down_arrow', {
-          'event_category': 'button_click',
-          'event_label': 'Scroll `My Selected Work` into view'
-        });
-
+        this._trackInternalButtonClick('down_arrow', 'button_click', 'Scroll `My Selected Work` into view');
       }
 
     }
