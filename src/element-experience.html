@@ -12,7 +12,6 @@
 
     <custom-style>
       <style is="custom-style">
-
         paper-chip {
           display: inline;
         }
@@ -81,26 +80,28 @@
       <div style="margin: 0 auto;" class="large center ">
 
         <div class="center-text">
-          <span class="emoji">👨‍💻<span>
+          <span class="emoji">👨‍💻
+            <span>
         </div>
-      
-        <h2 class="center-text">Relevant work experience</h2>  
+
+        <h2 class="center-text">Relevant work experience</h2>
 
         <div class="grid">
           <template is="dom-repeat" items="[[xps]]">
-              <div class="card">
-                <div class="card-content">
-                  <h3 class="role">[[item.role]]</h3>
-                  <h4 class="company">[[item.company]]</h4>
-                  <h4 class="timespan">[[item.timespan]]</h4>
-                  <h4 class="location">[[item.location]]</h4>
-                </div>
+            <div class="card">
+              <div class="card-content">
+                <h3 class="role">[[item.role]]</h3>
+                <h4 class="company">[[item.company]]</h4>
+                <h4 class="timespan">[[item.timespan]]</h4>
+                <h4 class="location">[[item.location]]</h4>
               </div>
+            </div>
           </template>
         </div>
 
         <div id="linkedin" class="center center-text" style="margin-top: 2rem;">
-          <a href="https://www.linkedin.com/in/iameirik/" class="button linkedin" target="_blank">See more on LinkedIn</a>
+          <a href="https://www.linkedin.com/in/iameirik/" class="button linkedin" target="_blank" data-category="experienceLinkedIn"
+            on-click="_onClick">See more on LinkedIn</a>
         </div>
 
       </div>
@@ -110,80 +111,71 @@
   </template>
 
   <script>
-
     class ElementExperience extends Polymer.Element {
-        static get is() {
-          return 'element-experience'
-        }
+      static get is() {
+        return 'element-experience'
+      }
 
-        ready() {
-          super.ready();
-          this.$.linkedin.addEventListener('click', e => {this._handleClick(e)});
-        }
-
-        _handleClick(e) {
-          // Send event to gtag.js
-
-          gtag('event', 'Clicked button', {
-            'event_category': 'Click',
-            'event_label': 'LinkedIn'
-          });
-
-        }
-
-
-        static get properties() {
-          return {
-            xps: {
-              type: Array,
-              value: () => {
-                return [
-                  {
-                    "role": "Product Designer",
-                    "company": "Schibsted Media Group",
-                    "timespan": "May 2016 – Present",
-                    "location": "Barcelona, Spain"
-                  },
-                  {
-                    "role": "UX Designer",
-                    "company": "Schibsted Media Group",
-                    "timespan": "Sep 2015 - May 2016 · 9 months",
-                    "location": "Oslo, Norway"
-                  },
-                  {
-                    "role": "Product Manager Web",
-                    "company": "Norsk Tipping",
-                    "timespan": "Sep 2014 - Sep 2015 · 1 year 1 month",
-                    "location": "Hamar, Norway"
-                  },
-                  {
-                    "role": "Lead Designer",
-                    "company": "Norsk Tipping",
-                    "timespan": "Sep 2013 - Sep 2014 · 1 year 1 month",
-                    "location": "Hamar, Norway"
-                  },
-                  {
-                    "role": "Interaction Designer",
-                    "company": "Norsk Tipping",
-                    "timespan": "Sep 2012 - Sep 2013 · 1 year",
-                    "location": "Hamar, Norway"
-                  },
-                  {
-                    "role": "Webdesigner",
-                    "company": "Volda University College",
-                    "timespan": "Mar 2008 - Oct 2011 · 4 years",
-                    "location": "Volda, Norway"
-                  }
-                ]
-              }
+      static get properties() {
+        return {
+          xps: {
+            type: Array,
+            value: () => {
+              return [{
+                  "role": "Product Designer",
+                  "company": "Schibsted Media Group",
+                  "timespan": "May 2016 – Present",
+                  "location": "Barcelona, Spain"
+                },
+                {
+                  "role": "UX Designer",
+                  "company": "Schibsted Media Group",
+                  "timespan": "Sep 2015 - May 2016 · 9 months",
+                  "location": "Oslo, Norway"
+                },
+                {
+                  "role": "Product Manager Web",
+                  "company": "Norsk Tipping",
+                  "timespan": "Sep 2014 - Sep 2015 · 1 year 1 month",
+                  "location": "Hamar, Norway"
+                },
+                {
+                  "role": "Lead Designer",
+                  "company": "Norsk Tipping",
+                  "timespan": "Sep 2013 - Sep 2014 · 1 year 1 month",
+                  "location": "Hamar, Norway"
+                },
+                {
+                  "role": "Interaction Designer",
+                  "company": "Norsk Tipping",
+                  "timespan": "Sep 2012 - Sep 2013 · 1 year",
+                  "location": "Hamar, Norway"
+                },
+                {
+                  "role": "Webdesigner",
+                  "company": "Volda University College",
+                  "timespan": "Mar 2008 - Oct 2011 · 4 years",
+                  "location": "Volda, Norway"
+                }
+              ]
             }
           }
         }
+      }
+
+      _onClick(e) {
+        const url = e.currentTarget.getAttribute('href');
+        const category = e.currentTarget.getAttribute('data-category') || '';
+        gtag('event', 'click', {
+          'event_category': category,
+          'event_label': url,
+          'transport_type': 'beacon'
+        });
+      }
 
     }
 
     window.customElements.define(ElementExperience.is, ElementExperience);
-  
   </script>
 
 </dom-module>

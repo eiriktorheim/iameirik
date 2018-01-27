@@ -15,7 +15,6 @@
 
     <custom-style>
       <style is="custom-style">
-
         .grid {
           display: grid;
           grid-gap: 1rem;
@@ -62,7 +61,6 @@
           margin: 0;
           padding: 0;
         }
-
       </style>
     </custom-style>
 
@@ -70,7 +68,8 @@
 
       <div class="large center center-text">
         <div>
-          <span class="emoji">🚀<span>
+          <span class="emoji">🚀
+            <span>
         </div>
         <h2>I’ve worked on projects for</h2>
       </div>
@@ -78,7 +77,7 @@
       <div class="large center">
         <div class="grid">
           <template is="dom-repeat" items="[[brands]]">
-            <a href="[[item.url]]" target="_blank">
+            <a href="[[item.url]]" target="_blank" on-click="_onClick">
               <div class="card brand">
                 <div class="center">
                   <lazy-image src="[[item.img]]" alt="[[item.alt]]"></lazy-image>
@@ -157,6 +156,15 @@
             }
           }
         }
+      }
+
+      _onClick(e) {
+        const url = e.currentTarget.getAttribute('href');
+        gtag('event', 'click', {
+          'event_category': 'outbound-clients',
+          'event_label': url,
+          'transport_type': 'beacon'
+        });
       }
 
     }

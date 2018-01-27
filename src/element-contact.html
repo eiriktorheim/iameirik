@@ -16,18 +16,17 @@
     <style include="shared-styles"></style>
 
     <style>
-
-      section{
+      section {
         color: white;
         padding: 4rem 1rem;
       }
 
-      .contact{
+      .contact {
         @apply --layout-horizontal;
         @apply --layout-center-justified;
       }
 
-      .icons{
+      .icons {
         @apply --layout-horizontal;
         @apply --layout-center;
         height: 3rem;
@@ -37,42 +36,43 @@
         margin: 0 auto 1rem auto;
       }
 
-      .contact > div{
+      .contact>div {
         @apply --layout-vertical;
         @apply --layout-center-justified;
-        width: 10.25rem
-        height: auto;
+        width: 10.25rem height: auto;
         margin: 1em;
       }
 
 
-      iron-icon{
+      iron-icon {
         height: 1.75rem;
         width: 1.75rem;
         color: var(--tint-dark-grey);
         margin: 0 auto;
       }
 
-      @media (max-width:450px){
-        .contact{
+      @media (max-width:450px) {
+        .contact {
           @apply --layout-vertical;
           @apply --layout-center;
         }
       }
 
-      h2, p, span, a, iron-icon{
+      h2,
+      p,
+      span,
+      a,
+      iron-icon {
         color: white;
       }
-
-
-
     </style>
 
     <section style="background-color: var(--tint-very-dark-grey)">
 
       <div class="mediumlarge center center-text">
         <div>
-          <span class="emoji">👋<span>
+          <span class="emoji">👋
+            <span>
         </div>
         <h2>Say hi</h2>
         <p>I'm always open for new opportunities, and I'm available for freelance work!</p>
@@ -84,7 +84,9 @@
             <iron-icon icon="communication:phone"></iron-icon>
           </div>
           <div>
-            <span><a id="mobile" href="tel:+4799704697">(+47) 997 04 697</a></span>
+            <span>
+              <a id="mobile" href="tel:+4799704697" data-category="contactMobile" on-click="_onClick">(+47) 997 04 697</a>
+            </span>
           </div>
         </div>
 
@@ -93,16 +95,19 @@
             <iron-icon icon="communication:email"></iron-icon>
           </div>
           <div>
-          <a id="email" href="mailto:mail@eirikgilje.com">mail@eirikgilje.com</a></span>
+            <a id="email" href="mailto:mail@eirikgilje.com" data-category="contactEmail" on-click="_onClick">mail@eirikgilje.com</a>
+            </span>
           </div>
         </div>
 
-        <div >
+        <div>
           <div class="icons" style="background:none;">
-            <img src="./images/linkedin.svg"/>
+            <img src="./images/linkedin.svg" />
           </div>
           <div>
-            <span><a id="linkedindown" href="https://www.linkedin.com/in/eirikgilje/" target="_blank">LinkedIn</a></span>
+            <span>
+              <a id="linkedindown" href="https://www.linkedin.com/in/eirikgilje/" target="_blank" data-category="contactLinkedIn" on-click="_onClick">LinkedIn</a>
+            </span>
           </div>
         </div>
 
@@ -114,43 +119,22 @@
   <script>
     class ElementContact extends Polymer.Element {
 
-      static get is() {return 'element-contact'}
-
-      ready() {
-        super.ready();
-        this.$.mobile.addEventListener('click', e => {this._handleClickLinkedMobile(e)});
-        this.$.email.addEventListener('click', e => {this._handleClickMail(e)});
-        this.$.linkedindown.addEventListener('click', e => {this._handleClickLinkedin(e)});
+      static get is() {
+        return 'element-contact'
       }
 
-      _handleClickLinkedMobile(e) {
-        // Send event to gtag.js
-        gtag('event', 'Clicked button', {
-          'event_category': 'Click',
-          'event_label': 'ContactMobile'
-        });
-      }
-
-      _handleClickMail(e) {
-        // Send event to gtag.js
-        gtag('event', 'Clicked button', {
-          'event_category': 'Click',
-          'event_label': 'ContactMail'
-        });
-      }
-
-      _handleClickLinkedin(e) {
-        // Send event to gtag.js
-        gtag('event', 'Clicked button', {
-          'event_category': 'Click',
-          'event_label': 'ContactLinkedIn'
+      _onClick(e) {
+        const url = e.currentTarget.getAttribute('href');
+        const category = e.currentTarget.getAttribute('data-category') || '';
+        gtag('event', 'click', {
+          'event_category': category,
+          'event_label': url,
+          'transport_type': 'beacon'
         });
       }
 
     }
     customElements.define(ElementContact.is, ElementContact);
-
   </script>
 
 </dom-module>
-
