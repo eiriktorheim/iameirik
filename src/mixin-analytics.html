@@ -1,0 +1,38 @@
+<link rel="import" href="../bower_components/polymer/lib/utils/mixin.html">
+
+<script>
+  /**
+   * 
+   * @polymerMixin
+   * @mixinFunction
+   */
+  const MixinAnalytics = (superclass) => class extends superclass {
+
+    _trackOutboundLink(e) {
+      const url = e.currentTarget.getAttribute('href');
+      const category = e.currentTarget.getAttribute('data-category') || '';
+      gtag('event', 'click', {
+        'event_category': category,
+        'event_label': url,
+        'transport_type': 'beacon'
+      });
+    }
+
+    _trackPageView() {
+      gtag('config', window.gtagId, {
+        'page_title': document.title,
+        'page_location': location.href,
+        'page_path': location.pathname
+      });
+    }
+
+    _trackInternalButtonClick(event, eventCategory, eventLabel) {
+      gtag('event', event, {
+        'event_category': eventCategory,
+        'event_label': eventLabel
+      });
+
+    }
+
+  }
+</script>

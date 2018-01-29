@@ -7,6 +7,7 @@
 <link rel="import" href="../bower_components/lazy-image/lazy-image.html">
 
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="mixin-analytics.html">
 
 <dom-module id="element-header">
 
@@ -17,7 +18,7 @@
     <style include="shared-styles"></style>
 
     <style>
-       :host {
+      :host {
         display: block;
       }
 
@@ -66,7 +67,7 @@
       .profile {
         @apply --layout-horizontal;
         @apply --layout-center;
-        height: 100vh;        
+        height: 100vh;
       }
 
       .icons {
@@ -266,10 +267,9 @@
         }
       }
 
-      .iam{
+      .iam {
         max-width: 380px;
       }
-
     </style>
 
     <header>
@@ -280,7 +280,9 @@
             <lazy-image alt="Profile picture" class="avatar" src="images/alt1.jpg" height="164" width="164"></lazy-image>
           </div>
           <div>
-            <h1 class="iam center animate fadeInUp two">I am Eirik<!--<lazy-image fade alt="I am Eirik" src="images/iam.svg" height="48" width="228"></lazy-image>--></h1>
+            <h1 class="iam center animate fadeInUp two">I am Eirik
+              <!--<lazy-image fade alt="I am Eirik" src="images/iam.svg" height="48" width="228"></lazy-image>-->
+            </h1>
             <p class="ingress animate fadeInUp three" style="color: var(--tint-light-grey);">Product designer and product manager from Norway, </br>currently based in Barcelona.</p>
           </div>
           <div class="center center-text" style="padding-top: 1rem;">
@@ -301,33 +303,33 @@
   </template>
 
   <script>
-    class ElementHeader extends Polymer.Element {
+    class ElementHeader extends MixinAnalytics(Polymer.Element) {
 
-      static get is() {return 'element-header'}
+      static get is() {
+        return 'element-header'
+      }
 
       ready() {
         super.ready();
-        this.$.downarrow.addEventListener('click', e => {this._handleClick(e)});
+        this.$.downarrow.addEventListener('click', e => {
+          this._handleClick(e)
+        });
       }
 
       _handleClick(e) {
 
         // Scroll down
 
-        Polymer.AppLayout.scroll({top: 500, behavior: 'smooth'});
-
-        // Send event to gtag.js
-
-        gtag('event', 'Clicked button', {
-          'event_category': 'Click',
-          'event_label': 'DownArrow'
+        Polymer.AppLayout.scroll({
+          top: 500,
+          behavior: 'smooth'
         });
 
+        this._trackInternalButtonClick('down_arrow', 'button_click', 'Scroll `My Selected Work` into view');
       }
 
     }
     customElements.define(ElementHeader.is, ElementHeader);
-
   </script>
 
 </dom-module>

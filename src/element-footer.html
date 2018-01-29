@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="mixin-analytics.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="element-footer">
@@ -24,8 +25,9 @@
     <!-- shadow DOM goes here -->
     <section>
       <div class="larger center center-text">
-        <h3>Handcrafted with  &nbsp;❤️ &nbsp; and  &nbsp;☕&nbsp; from Barcelona. 
-          <a id="githublink" class="github" href="https://github.com/eiriktorheim/iameirik" target="_blank">Code</a> and design by Eirik Torheim Gilje.
+        <h3>Handcrafted with &nbsp;❤️ &nbsp; and &nbsp;☕&nbsp; from Barcelona.
+          <a id="githublink" class="github" href="https://github.com/eiriktorheim/iameirik" target="_blank" data-category="footerGitHub"
+            on-click="_onClick">Code</a> and design by Eirik Torheim Gilje.
         </h3>
       </div>
     </section>
@@ -33,26 +35,18 @@
   </template>
 
   <script>
-    class ElementFooter extends Polymer.Element {
+    class ElementFooter extends MixinAnalytics(Polymer.Element) {
 
-      static get is() {return 'element-footer'}
-
-      ready() {
-        super.ready();
-        this.$.githublink.addEventListener('click', e => {this._handleClick(e)});
+      static get is() {
+        return 'element-footer'
       }
 
-      _handleClick(e) {
-        // Send event to gtag.js
-        gtag('event', 'Clicked button', {
-          'event_category': 'Click',
-          'event_label': 'Github'
-        });
+      _onClick(e) {
+        this._trackOutboundLink(e);
       }
 
     }
     customElements.define(ElementFooter.is, ElementFooter);
-
   </script>
 
 </dom-module>

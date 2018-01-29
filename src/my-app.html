@@ -6,7 +6,7 @@ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
 The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
---> 
+-->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
@@ -20,6 +20,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="my-case.html">
 <link rel="lazy-import" href="my-view404.html">
 
+<link rel="import" href="mixin-analytics.html">
+
 <dom-module id="my-app">
   <template>
 
@@ -28,7 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <!-- Main content -->
 
-    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+    <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main" selected-attribute="visible">
       <my-view1 name="view1"></my-view1>
       <my-view4 name="view4"></my-view4>
       <my-view5 name="view5"></my-view5>
@@ -38,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyApp extends Polymer.Element {
+    class MyApp extends MixinAnalytics(Polymer.Element) {
 
       static get is() {
         return 'my-app';
@@ -72,11 +74,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
 
-
+      connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('virtual-page-changed', this._virtualPageChanged.bind(this));
+      }
 
       _routePageChanged(page) {
-
-
         // Polymer 2.0 will call with `undefined` on initialization.
         // Ignore until we are properly called with a string.
         if (page === undefined) {
@@ -87,19 +90,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Deault to 'view1' in that case.
         this.page = page || 'view1';
 
-        Polymer.AppLayout.scroll({top: 0});
-
-        //console.log('Send sidevisning til Google: ' + location.pathname);
-
-        gtag('config', 'UA-96014868-1', {
-          'page_title': location.pathname,
-          'page_location': location.href,
-          'page_path': location.pathname
+        Polymer.AppLayout.scroll({
+          top: 0
         });
       }
 
       _pageChanged(page) {
-
         // Load page import on demand. Show 404 page if fails
 
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
@@ -112,6 +108,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _showPage404() {
         this.page = 'view404';
+      }
+
+      _virtualPageChanged(e) {
+        this._setPageTitle(e);
+        this._sendVirtualPageViewToGoogleAnalytics();
+      }
+
+      _sendVirtualPageViewToGoogleAnalytics() {
+        this._trackPageView();
+      }
+
+      _setPageTitle(e) {
+        document.title = e.detail.title;
       }
     }
 
